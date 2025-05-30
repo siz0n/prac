@@ -144,7 +144,12 @@ int main() {
                     break;
                 }
                 case Option::ATTACK_SIMULATION: {
-                    mpz_class p = input_prime("Введите p (простое): ");
+                    gmp_randclass rng(gmp_randinit_default);
+                    rng.seed(time(nullptr));
+                    mpz_class rand_num = rng.get_z_bits(BITS);
+                    mpz_class p;
+                    mpz_nextprime(p.get_mpz_t(), rand_num.get_mpz_t());
+                    cout << "Ваше случайное значние чилса p: " << p << endl;
                     mpz_class g = input_xkg("Введите g (<p): ", p);
                     mpz_class x = input_xkg("Введите x (<p): ", p);
                     mpz_class k = input_xkg("Введите k (<p): ", p);
